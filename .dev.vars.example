@@ -1,0 +1,3 @@
+DATABASE_HOST=aws.xxxx
+DATABASE_USER=xxxx
+DATABASE_PASSWORD=pscale_pw_xxxx

@@ -4,3 +4,7 @@ node_modules
 /build
 /public/build
 .env
+
+.dev.vars
+.wrangler
+vite.config.ts.timestamp*

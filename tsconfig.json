@@ -1,5 +1,5 @@
 {
-  "include": ["env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["env.d.ts", "**/*.ts", "**/*.tsx", "tailwind.config.ts"],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "isolatedModules": true,
@@ -15,9 +15,11 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./app/*"]
+      "~/*": ["./client/*"],
+      "@client/*": ["./client/*"],
+      "@api/*": ["./server/api/*"],
+      "@shadcn/*": ["./client/shadcn/ui/*"],
     },
-
     // Remix takes care of building everything in `remix build`.
     "noEmit": true
   }
