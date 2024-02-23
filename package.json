@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "remix vite:build",
-    "dev": "pkill node && wrangler pages dev  --local --compatibility-flags='nodejs_compat' --compatibility-date=2024-02-19 -- bun run dev:client",
+    "dev": "wrangler pages dev  --local --compatibility-flags='nodejs_compat' --compatibility-date=2024-02-19 -- bun run dev:client",
     "dev:client": "remix vite:dev",
     "deploy": "bun run build && wrangler pages deploy build/client",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
