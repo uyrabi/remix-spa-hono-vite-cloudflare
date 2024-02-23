@@ -1,3 +1,10 @@
+# 実装方針
+
+## TSDoc/TypeDoc
+
+https://ja.wikibooks.org/wiki/TSDoc
+https://typedoc.org/guides/overview/
+
 # ディレクトリ
 
 ## client
