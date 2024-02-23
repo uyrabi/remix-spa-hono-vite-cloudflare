@@ -105,3 +105,7 @@ https://typedoc.org/guides/overview/
 ## playwright/msw
 
 ## dredd
+
+## Github CI/CD
+
+## AWS deploy
