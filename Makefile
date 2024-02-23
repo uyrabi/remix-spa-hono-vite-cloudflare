@@ -5,3 +5,6 @@ sh_add:
 
 db_update:
 	bun drizzle-kit push:mysql
+
+down:
+	pkill node

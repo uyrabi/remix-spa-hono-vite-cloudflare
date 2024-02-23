@@ -57,4 +57,4 @@ export const CreateRouting = createRoute({
 })
 
 // *** rpcモードで使えるようにする
-export const createApiRoute = app.openapi(CreateRouting, CreateHandler);
+export const createApi = app.openapi(CreateRouting, CreateHandler);

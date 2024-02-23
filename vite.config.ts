@@ -1,7 +1,6 @@
 import { vitePlugin as remix } from "@remix-run/dev";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
-import { getEnv } from '@hono/vite-dev-server/cloudflare-pages'
 
 export default defineConfig({
   plugins: [remix({ appDirectory: "client", ssr: false }), tsconfigPaths()],

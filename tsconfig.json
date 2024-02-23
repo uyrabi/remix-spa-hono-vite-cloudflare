@@ -17,7 +17,7 @@
     "paths": {
       "~/*": ["./client/*"],
       "@client/*": ["./client/*"],
-      "@api/*": ["./server/api/*"],
+      "@server/*": ["./functions/*"],
       "@shadcn/*": ["./client/shadcn/ui/*"],
     },
     // Remix takes care of building everything in `remix build`.

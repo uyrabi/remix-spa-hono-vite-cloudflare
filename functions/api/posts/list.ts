@@ -44,4 +44,4 @@ export const ListRouting = createRoute({
 })
 
 // *** rpcモードで使えるようにする
-export const listApiRoute = app.openapi(ListRouting, ListHandler);
+export const listApi = app.openapi(ListRouting, ListHandler);
