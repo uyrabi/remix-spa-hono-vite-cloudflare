@@ -106,6 +106,8 @@ https://typedoc.org/guides/overview/
 
 ## dredd
 
+## bun test
+
 ## Github CI/CD
 
 ## AWS deploy
