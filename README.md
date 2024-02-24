@@ -109,3 +109,11 @@ https://typedoc.org/guides/overview/
 ## Github CI/CD
 
 ## AWS deploy
+
+## OWASP ZAP
+
+## ビット SQL
+
+## AdminJS
+
+- https://github.com/makuko/adminjs-drizzle
