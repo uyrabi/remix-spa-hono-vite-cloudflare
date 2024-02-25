@@ -18,13 +18,8 @@ import {
 import { PostForm } from "./form";
 import { PostList } from "./postList";
 
-import { createApi } from "@server/api/posts/create";
-import { listApi } from "@server/api/posts/list";
-// *** loaderやactionで使うAPIエンドポイント
-// *** hono RPCを経由してアクセス
-import { hc } from "hono/client";
-
-import { ServerInferRequest, initClient } from "@ts-rest/core";
+// *** loaderやactionでAPIを叩く際はts-restを用いる
+import { initClient } from "@ts-rest/core";
 import { contract } from "models/contracts/post";
 
 const client = initClient(contract, {
@@ -40,20 +35,18 @@ export const meta: MetaFunction = () => {
 export async function clientLoader({ request }: ClientLoaderFunctionArgs) {
 	console.log("=== clientLoader at routes/_index ===");
 	console.log("request", request);
+	try {
+		const response = await client.listPost();
+		console.table(response);
 
-	const response = await client.listPost();
-
-	console.table(response);
-
-	if (response.status === 201) {
-		// body is Post
-		console.log(response.body);
-	} else {
-		// body is unknown
-		console.log(response.body);
+		if (response.status != 201) {
+			throw new Error(`response.status: ${response.status}`);
+		}
+		return response.body;
+	} catch (e) {
+		console.error("clientLoader e:", e);
+		return redirect("./");
 	}
-
-	return response.body;
 }
 
 export default function View() {
@@ -76,22 +69,14 @@ export async function clientAction({ request }: ClientActionFunctionArgs) {
 	console.log("--- clientAction ---");
 	try {
 		const formData = await request.formData();
-		const requestSchema = contract.createPost.body;
 		const formDataToJson = Object.fromEntries(formData.entries());
+		const requestSchema = contract.createPost.body;
 		// フォームの入力値をRequestのzodスキーマにキャストする（zodスキーマに沿っていないとエラーになる）
 		const jsonBody = requestSchema.parse(formDataToJson);
 
-		const response = await client.createPost({
-			body: jsonBody,
-		});
+		const response = await client.createPost({ body: jsonBody });
 
-		console.table(response);
-
-		if (response.status === 201) {
-			// body is Post
-			console.log(response.body);
-		} else {
-			// body is unknown
+		if (response.status != 201) {
 			throw new Error(`response.status: ${response.status}`);
 		}
 	} catch (e) {

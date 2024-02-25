@@ -8,16 +8,16 @@ import {
 	zodSelectSchema,
 } from "models/post/types";
 
-extendZodWithOpenApi(z);
-
-const c = initContract();
-
 export const RequestSchema = zodInsertSchema.pick({
 	title: true,
 	content: true,
 });
 
 export type ResponseSchema = SelectType;
+
+extendZodWithOpenApi(z);
+
+const c = initContract();
 
 export const contract = c.router({
 	listPost: {
