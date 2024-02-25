@@ -24,6 +24,14 @@ import { listApi } from "@server/api/posts/list";
 // *** hono RPCを経由してアクセス
 import { hc } from "hono/client";
 
+import { ServerInferRequest, initClient } from "@ts-rest/core";
+import { contract } from "models/contracts/post";
+
+const client = initClient(contract, {
+	baseUrl: "/",
+	baseHeaders: {},
+});
+
 // *** charSetやviewportなどmetaタグの内容を設定する
 export const meta: MetaFunction = () => {
 	return [{ title: "New Remix App" }];
@@ -32,17 +40,20 @@ export const meta: MetaFunction = () => {
 export async function clientLoader({ request }: ClientLoaderFunctionArgs) {
 	console.log("=== clientLoader at routes/_index ===");
 	console.log("request", request);
-	// hono RPCモードに対しAPIリクエストを送信
-	const listRpc = hc<typeof listApi>("/api/");
-	// rpc.【path】.$【method】
-	const response = await listRpc.posts.$get();
-	const data = await response.json();
-	if (!response.ok) {
-		throw new Error(
-			`clientLoader failed ${response.status} ${response.statusText}`,
-		);
+
+	const response = await client.listPost();
+
+	console.table(response);
+
+	if (response.status === 201) {
+		// body is Post
+		console.log(response.body);
+	} else {
+		// body is unknown
+		console.log(response.body);
 	}
-	return data;
+
+	return response.body;
 }
 
 export default function View() {
@@ -62,28 +73,29 @@ export default function View() {
 }
 
 export async function clientAction({ request }: ClientActionFunctionArgs) {
-	// フォームの入力値をjson形式に変換し、必要な型にキャストする
-	const formData = await request.formData();
-	const title = formData.get("title");
-	const content = formData.get("content");
+	console.log("--- clientAction ---");
+	try {
+		const formData = await request.formData();
+		const requestSchema = contract.createPost.body;
+		const formDataToJson = Object.fromEntries(formData.entries());
+		// フォームの入力値をRequestのzodスキーマにキャストする（zodスキーマに沿っていないとエラーになる）
+		const jsonBody = requestSchema.parse(formDataToJson);
 
-	// TODO: Formの実装によっては簡潔にできないか？
-	// titleとcontentがstring型であることを確認
-	if (typeof title !== "string" || typeof content !== "string") {
-		throw new Error("Form data is invalid");
-	}
+		const response = await client.createPost({
+			body: jsonBody,
+		});
 
-	const jsonBody = { title, content };
+		console.table(response);
 
-	// hono RPCモードに対しAPIリクエストを送信
-	const createRpc = hc<typeof createApi>("/api/");
-	// rpc.【path】.$【method】 formの場合はform:が必要
-	const response = await createRpc.posts.$post({ form: jsonBody });
-
-	if (!response.ok) {
-		throw new Error(
-			`clientAction failed ${response.status} ${response.statusText}`,
-		);
+		if (response.status === 201) {
+			// body is Post
+			console.log(response.body);
+		} else {
+			// body is unknown
+			throw new Error(`response.status: ${response.status}`);
+		}
+	} catch (e) {
+		console.error("clientAction e:", e);
 	}
 	return redirect(`./`);
 }

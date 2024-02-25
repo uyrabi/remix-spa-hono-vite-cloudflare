@@ -1,7 +1,12 @@
 import { eq } from "drizzle-orm";
 
 import { table } from "./table";
-import { InsertType, RepositoryTypes, SelectType } from "./types";
+import {
+	InsertType,
+	RepositoryTypes,
+	SelectType,
+	zodSelectSchema,
+} from "./types";
 
 import ConnectionManager from "models/db/connection";
 
@@ -42,7 +47,7 @@ class Repository implements RepositoryTypes {
 		return dbRecord.length > 0;
 	}
 
-	async findById(id: number): Promise<SelectType | null> {
+	async findById(id: number): Promise<typeof zodSelectSchema | null> {
 		// findByIdの実装
 		const db = await ConnectionManager.getConnection();
 		// console.log("repo findbyid db:", db);
@@ -58,7 +63,9 @@ class Repository implements RepositoryTypes {
 		return records;
 	}
 
-	async create(params: Omit<InsertType, "id">): Promise<InsertType | null> {
+	async create(
+		params: Omit<InsertType, "id">,
+	): Promise<typeof zodSelectSchema | null> {
 		const db = await ConnectionManager.getConnection();
 		// console.log("repo create db:", db);
 		const newRecordResult = await db.insert(table).values(params);

@@ -1,8 +1,8 @@
-import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "@hono/zod-openapi";
-import { table } from './table';
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
+import { table } from "./table";
 
-const modelName: string = 'post';
+const modelName: string = "post";
 
 // 型ユーティリティ: Omit, Pick, Partial, Required, Readonly, Record, Exclude, Extract
 
@@ -14,22 +14,24 @@ const modelName: string = 'post';
 
 // リポジトリ層（DB操作）で使う型をここに定義
 export type RepositoryTypes = {
-    newValues: () => Promise<Omit<InsertType, 'id'>>;
-    create: (params: Omit<InsertType, 'id'>) => Promise<InsertType | null>;
-    findById: (id: number) => Promise<SelectType | null>;
-    all: () => Promise<SelectType[]>;
-}
+	newValues: () => Promise<Omit<InsertType, "id">>;
+	create: (
+		params: Omit<InsertType, "id">,
+	) => Promise<typeof zodSelectSchema | null>;
+	findById: (id: number) => Promise<typeof zodSelectSchema | null>;
+	all: () => Promise<SelectType[]>;
+};
 
 // サービス層（DB操作以外）で使う型をここに定義
 export type ServiceTypes = {
-    sample: () => SelectType;
-}
+	sample: () => SelectType;
+};
 
 // *** 変更しない ここから
 
 // table.ts（テーブル定義）からZod（バリデータ）スキーマを生成
 export const zodSelectSchema = createSelectSchema(table);
-export const zodInsertSchema = createInsertSchema(table).openapi(modelName);
+export const zodInsertSchema = createInsertSchema(table);
 
 // z.infer<typeof ZodObject> でZodのスキーマからtypeを取得できる
 export type SelectType = z.infer<typeof zodSelectSchema>;

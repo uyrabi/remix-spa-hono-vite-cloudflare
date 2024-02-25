@@ -127,3 +127,5 @@ https://techfeed.io/entries/65cc0f0f7036d02cdfb92e6b
 - https://github.com/makuko/adminjs-drizzle
 
 ## シリアライズ
+
+## ts-rest

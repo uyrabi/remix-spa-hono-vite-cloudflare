@@ -1,75 +1,32 @@
-import { OpenAPIHono } from "@hono/zod-openapi";
-import { createRoute, z } from "@hono/zod-openapi";
-import type { Context } from "hono";
-import ConnectionManager from "models/db/connection";
 import Repository from "models/post/repository";
-import {
-	InsertType,
-	SelectType,
-	zodInsertSchema,
-	zodSelectSchema,
-} from "models/post/types";
+import { zodInsertSchema, zodSelectSchema } from "models/post/types";
 
-export const app = new OpenAPIHono();
+import { contract } from "models/contracts/post";
+import { initServer } from "ts-rest-hono";
 
 // *** リクエスト・レスポンスの型はここに記述
 // *** omit: 一部のプロパティを省略した新しい型を生成
 // *** pick: 一部のプロパティを抽出した新しい型を生成
 
-export const RequestSchema = zodInsertSchema.pick({
+export const requestSchema = zodInsertSchema.pick({
 	title: true,
 	content: true,
 });
 
 export const ResponseSchema = zodSelectSchema;
 
-// *** Handler ... APIのロジック部分
-// *** Routing ... APIのルーティング部分
-// *** MEMO: リクエストがRequestSchemaに沿っていない場合、Handlerが実行されるよりも前にエラーになる
+// *** MEMO: リクエストがRequestSchemaに沿っていない場合、実行されるよりも前にエラーになる
 
-export const CreateHandler = async (c: Context) => {
-	try {
-		console.log("postCreateHandler start...");
+const s = initServer();
+export const router = s.router(contract, {
+	createPost: async ({ body: requestSchema }) => {
+		console.log("=== createPost ===");
 		const repository = new Repository();
-		// バリデーションエラーの場合はparseでエラーが発生しcatchされる
-		const validatedBody = zodInsertSchema.parse(await c.req.parseBody()); // formDataの値をRequestSchemaに合うようキャストする
-		console.log("validatedBody:", validatedBody);
+		const validatedBody = zodInsertSchema.parse(requestSchema);
 		const newRecord = await repository.create(validatedBody);
-		// console.log("newRecord:", newRecord);
-		await new Promise((resolve) => setTimeout(resolve, 3000)); // 3秒待つ
-		return c.json(newRecord);
-	} catch (e) {
-		console.log("catch error:", e);
-		return c.json({ error: e });
-	}
-};
-
-export const CreateRouting = createRoute({
-	method: "post",
-	path: "/posts",
-	// request: {
-	// 	body: {
-	// 		content: {
-	// 			"multipart/form-data": {
-	// 				schema: RequestSchema,
-	// 			},
-	// 		},
-	// 	},
-	// },
-	responses: {
-		200: {
-			content: {
-				"application/json": {
-					schema: ResponseSchema,
-				},
-			},
-			description: "postの新規作成に成功",
-		},
-		otherError: {
-			description: "404や500など共通のエラーは別所に記載",
-		},
+		return {
+			status: 201,
+			body: newRecord,
+		};
 	},
 });
-
-// *** rpcモードで使えるようにする
-export const createApi = app.openapi(CreateRouting, CreateHandler);
