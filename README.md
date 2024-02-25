@@ -102,9 +102,15 @@ https://typedoc.org/guides/overview/
 
 ## prism
 
+## SafeTest
+
+https://techfeed.io/entries/65cc0f0f7036d02cdfb92e6b
+
 ## playwright/msw
 
 ## dredd
+
+## JSDoc / TypeDoc
 
 ## bun test
 
