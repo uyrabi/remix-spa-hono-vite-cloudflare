@@ -119,3 +119,5 @@ https://typedoc.org/guides/overview/
 ## AdminJS
 
 - https://github.com/makuko/adminjs-drizzle
+
+## シリアライズ
