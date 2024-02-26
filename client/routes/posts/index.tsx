@@ -23,7 +23,7 @@ import { initClient } from "@ts-rest/core";
 import { contract } from "models/contracts/post";
 
 const client = initClient(contract, {
-	baseUrl: "/",
+	baseUrl: "",
 	baseHeaders: {},
 });
 

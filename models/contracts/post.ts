@@ -22,7 +22,7 @@ const c = initContract();
 export const contract = c.router({
 	listPost: {
 		method: "GET",
-		path: "api/posts",
+		path: "/api/posts",
 		responses: {
 			201: zodSelectSchema.openapi({
 				title: "User",
@@ -33,7 +33,7 @@ export const contract = c.router({
 	},
 	createPost: {
 		method: "POST",
-		path: "api/posts",
+		path: "/api/posts",
 		responses: {
 			201: zodSelectSchema.openapi({
 				title: "User",

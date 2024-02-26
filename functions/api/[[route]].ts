@@ -46,13 +46,18 @@ const openApiDocument = generateOpenApi(contract, {
 	},
 });
 
-import { SwaggerUI } from "@hono/swagger-ui";
+import { swaggerUI } from "@hono/swagger-ui";
 import { html } from "hono/html";
 
-app.doc("/api/doc", openApiDocument);
-
-app.get("/api/ts/doc", (c, next) => {
+app.get("/api/doc/json", (c, next) => {
 	return c.json(openApiDocument);
 });
+
+app.get(
+	"/api/doc",
+	swaggerUI({
+		url: "/api/doc/json",
+	}),
+);
 
 export const onRequest = handle(app);

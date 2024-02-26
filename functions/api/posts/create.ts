@@ -24,6 +24,7 @@ export const router = s.router(contract, {
 		const repository = new Repository();
 		const validatedBody = zodInsertSchema.parse(requestSchema);
 		const newRecord = await repository.create(validatedBody);
+		// const responseBody = zodSelectSchema.parse(newRecord);
 		return {
 			status: 201,
 			body: newRecord,

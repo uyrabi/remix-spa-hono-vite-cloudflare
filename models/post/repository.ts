@@ -40,7 +40,8 @@ class Repository implements RepositoryTypes {
 
 	async isPersisted(record: SelectType): Promise<boolean> {
 		// DBに保存されているかどうかを判定するためのメソッド
-		const dbRecord = await this.db
+		const db = await ConnectionManager.getConnection();
+		const dbRecord = await db
 			.select()
 			.from(table)
 			.where(eq(table.id, record.id));
