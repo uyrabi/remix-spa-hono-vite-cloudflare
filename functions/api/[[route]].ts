@@ -1,13 +1,17 @@
+import { swaggerUI } from "@hono/swagger-ui";
 import { OpenAPIHono } from "@hono/zod-openapi";
+import { generateOpenApi } from "@ts-rest/open-api";
 import { handle } from "hono/cloudflare-pages";
 import { logger } from "hono/logger";
-
+import { contract } from "models/contracts/post";
 import ConnectionManager from "models/db/connection";
 
+import { api as postApi } from "./posts";
+
 type Bindings = {
-	PS_HOST: string;
-	PS_USER: string;
-	PS_PASSWORD: string;
+	DATABASE_HOST: string;
+	DATABASE_USER: string;
+	DATABASE_PASSWORD: string;
 };
 
 const app = new OpenAPIHono<{ Bindings: Bindings }>();
@@ -20,24 +24,7 @@ app.use("/api/*", async (c, next) => {
 	await next();
 });
 
-app.get("/api", (c) => {
-	return c.json({
-		message: "Hello Hono!!",
-	});
-});
-
-// import { postApi } from "./posts";
-
-// app.route("/api/", postApi);
-
-import { generateOpenApi } from "@ts-rest/open-api";
-import { contract } from "models/contracts/post";
-import { createHonoEndpoints } from "ts-rest-hono";
-import { router as createRouter } from "./posts/create";
-import { router as listRouter } from "./posts/list";
-
-createHonoEndpoints(contract, createRouter, app);
-createHonoEndpoints(contract, listRouter, app);
+app.route("/", postApi);
 
 const openApiDocument = generateOpenApi(contract, {
 	info: {
@@ -45,9 +32,6 @@ const openApiDocument = generateOpenApi(contract, {
 		version: "1.0.0",
 	},
 });
-
-import { swaggerUI } from "@hono/swagger-ui";
-import { html } from "hono/html";
 
 app.get("/api/doc/json", (c, next) => {
 	return c.json(openApiDocument);

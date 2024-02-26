@@ -1,17 +1,13 @@
 // // ファイル名をindex.tsとしておくと、import exportで以下のようにできる
 // // 例) import { userApi } from './routes/users';
+import { OpenAPIHono } from "@hono/zod-openapi";
 
-// import { OpenAPIHono } from "@hono/zod-openapi";
-// import { CreateHandler, CreateRouting } from "./create";
-// import { ListHandler, ListRouting } from "./list";
+export const api = new OpenAPIHono();
 
-// export const postApi = new OpenAPIHono();
+import { contract } from "models/contracts/post";
+import { createHonoEndpoints } from "ts-rest-hono";
+import { router as createRouter } from "./create";
+import { router as listRouter } from "./list";
 
-// console.log(" =====  api/posts/index.ts  ===== ");
-
-// // postApi.openapi(CreateRouting, (c) => { return CreateHandler(c) })
-// //     .openapi(ListRouting, (c) => { return ListHandler(c) });
-
-// postApi.openapi(ListRouting, (c) => {
-// 	return ListHandler(c);
-// });
+createHonoEndpoints(contract, createRouter, api);
+createHonoEndpoints(contract, listRouter, api);
