@@ -1,3 +1,9 @@
+# 推奨拡張機能
+
+- Biome
+- Error Lens
+- Pretty TypeScript Errors
+
 # 実装方針
 
 ## TSDoc/TypeDoc
