@@ -1,3 +1,14 @@
+# Usage
+
+```
+bun run dev
+bun run down
+bun run build
+bun run deploy
+```
+
+https://zenn.dev/yusukebe/articles/c86b8bd8d47a53
+
 # 推奨拡張機能
 
 - Biome
@@ -141,3 +152,15 @@ https://techfeed.io/entries/65cc0f0f7036d02cdfb92e6b
 ## SecureHeaders
 
 ## ReDoc
+
+# MEMO
+
+## remix-run with react@canary
+
+- remix-run のバージョンをあげると react@canary 使えない
+
+## wrangler.toml
+
+```
+vim ~/.config/.wrangler/config/default.toml
+```
