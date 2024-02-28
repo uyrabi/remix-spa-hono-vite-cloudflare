@@ -8,3 +8,9 @@ db_update:
 
 down:
 	pkill node
+
+run_client:
+	docker-compose up -d
+
+run_server:
+	docker-compose exec app bun run dev:server
