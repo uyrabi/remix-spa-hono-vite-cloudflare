@@ -17,7 +17,6 @@
   "dependencies": {
     "@hono/swagger-ui": "^0.2.1",
     "@hono/vite-cloudflare-pages": "^0.2.5",
-    "@hono/zod-openapi": "^0.9.6",
     "@planetscale/database": "1.6.0",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-menubar": "^1.0.4",
@@ -33,6 +32,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "conform": "^0.2.16",
+    "dotenv": "^16.4.5",
     "drizzle-kit": "^0.20.14",
     "drizzle-orm": "^0.29.3",
     "drizzle-zod": "^0.5.1",
@@ -50,8 +50,6 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.5.3",
-    "@hono/vite-dev-server": "^0.8.0",
-    "@originjs/vite-plugin-commonjs": "^1.0.3",
     "@remix-run/dev": "^2.7.1",
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
@@ -64,7 +62,6 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "typescript": "^5.1.6",
     "vite": "^5.1.0",
-    "vite-plugin-cjs-interop": "^2.0.6",
     "vite-tsconfig-paths": "^4.2.1"
   },
   "engines": {

@@ -1,8 +1,8 @@
 // // ファイル名をindex.tsとしておくと、import exportで以下のようにできる
 // // 例) import { userApi } from './routes/users';
-import { OpenAPIHono } from "@hono/zod-openapi";
+import { Hono } from "hono";
 
-export const api = new OpenAPIHono();
+export const api = new Hono();
 
 import { contract } from "models/contracts/post";
 import { createHonoEndpoints } from "ts-rest-hono";

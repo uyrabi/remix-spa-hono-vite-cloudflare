@@ -1,4 +1,5 @@
 import { vitePlugin as remix } from "@remix-run/dev";
+// import "dotenv/config";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
@@ -10,8 +11,10 @@ export default defineConfig({
 					proxy: {
 						// `/api` へのリクエストを `localhost:8788` に転送
 						"/api": "http://localhost:8788",
+						// "/api": `http://localhost:${process.env.SERVER_PORT}`,
 					},
 					host: true,
+					strictPort: true,
 			  }
 			: {},
 });
