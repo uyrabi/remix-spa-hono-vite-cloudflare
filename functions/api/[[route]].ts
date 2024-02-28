@@ -20,13 +20,13 @@ console.log("Hi Hono!");
 
 app.use(logger());
 
-app.use(
-	"/api/*",
-	basicAuth({
-		username: "hoge",
-		password: "fuga",
-	}),
-);
+// app.use(
+// 	"/api/*",
+// 	basicAuth({
+// 		username: "hoge",
+// 		password: "fuga",
+// 	}),
+// );
 
 app.use("/api/*", async (c, next) => {
 	await ConnectionManager.getConnection(c);
