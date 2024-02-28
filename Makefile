@@ -7,4 +7,4 @@ db_update:
 	bun drizzle-kit push:mysql
 
 down:
-	pkill node
+	bun run down
