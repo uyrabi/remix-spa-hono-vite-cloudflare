@@ -5,6 +5,13 @@ bun run dev
 bun run dev:down
 bun run build
 bun run deploy
+
+## or
+
+make dev
+make down
+make build
+make deploy
 ```
 
 https://zenn.dev/yusukebe/articles/c86b8bd8d47a53
