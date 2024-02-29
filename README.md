@@ -2,7 +2,7 @@
 
 ```
 bun run dev
-bun run down
+bun run dev:down
 bun run build
 bun run deploy
 ```
