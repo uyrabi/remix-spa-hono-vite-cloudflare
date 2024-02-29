@@ -24,6 +24,11 @@ https://zenn.dev/yusukebe/articles/c86b8bd8d47a53
 
 # 実装方針
 
+## 型を解決できない場合
+
+- any は使わない
+- As で解決しコメントを残す
+
 ## TSDoc/TypeDoc
 
 https://ja.wikibooks.org/wiki/TSDoc
