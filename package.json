@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "bun run dev:server bun run dev:client",
-    "dev:client": "dotenv -e .env.development remix vite:dev",
+    "dev:client": "remix vite:dev",
     "dev:server": "source .env.development && wrangler pages dev --local --compatibility-flags='nodejs_compat' --compatibility-date=2024-02-19 --port $SERVER_PORT --",
     "dev:down": "source .env.development && bunx kill-port $CLIENT_PORT $SERVER_PORT",
     "deploy": "bun run build && wrangler pages deploy build/client",
@@ -54,7 +54,6 @@
     "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
-    "dotenv-cli": "^7.3.0",
     "eslint": "^8.38.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.28.1",

@@ -8,8 +8,7 @@ export default defineConfig({
 		process.env.NODE_ENV === "development"
 			? {
 					proxy: {
-						// `/api` へのリクエストを `localhost:8788` に転送
-						// "/api": "http://localhost:8788",
+						// `/api` へのリクエストを `localhost:${process.env.SERVER_PORT}` に転送
 						"/api": `http://localhost:${process.env.SERVER_PORT}`,
 					},
 					host: true,
