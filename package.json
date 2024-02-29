@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "bun run dev:server bun run dev:client",
-    "dev:client": "source .env.development && dotenv -e .env.development remix vite:dev --port $CLIENT_PORT",
+    "dev:client": "dotenv -e .env.development remix vite:dev",
     "dev:server": "source .env.development && wrangler pages dev --local --compatibility-flags='nodejs_compat' --compatibility-date=2024-02-19 --port $SERVER_PORT --",
-    "down": "source .env.development && bunx kill-port $CLIENT_PORT $SERVER_PORT",
+    "dev:down": "source .env.development && bunx kill-port $CLIENT_PORT $SERVER_PORT",
     "deploy": "bun run build && wrangler pages deploy build/client",
     "build": "remix vite:build",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
