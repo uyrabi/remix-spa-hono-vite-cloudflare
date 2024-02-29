@@ -3,6 +3,9 @@
 sh_add:
 	bunx --bun shadcn-ui@latest add ${name}
 
+db_migrate:
+	bun drizzle-kit generate:mysql
+
 db_update:
 	bun drizzle-kit push:mysql
 

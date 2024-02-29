@@ -11,13 +11,6 @@ import {
 } from "@shadcn/card";
 import { Input } from "@shadcn/input";
 import { Label } from "@shadcn/label";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@shadcn/select";
 
 import { Switch } from "@shadcn/switch";
 import { useState } from "react";
@@ -50,24 +43,28 @@ export function SignForm() {
 			</CardHeader>
 			<CardContent>
 				<Form method="post" id="post_form">
+					<input type="hidden" name="sign_up" value={isChecked.toString()} />
 					<div className="grid w-full items-center gap-4">
 						<div className="flex flex-col space-y-1.5">
 							<Label htmlFor="title">メールアドレス</Label>
-							<Input id="title" name="title" placeholder="Title of your post" />
+							<Input id="email" name="email" placeholder="email" />
 						</div>
 						<div className="flex flex-col space-y-1.5">
 							<Label htmlFor="title">パスワード</Label>
-							<Input id="title" name="title" placeholder="Password" />
+							<Input id="password" name="password" placeholder="Password" />
 						</div>
 						{isChecked ? (
 							<div className="flex flex-col space-y-1.5">
 								<Label htmlFor="title">パスワード（確認）</Label>
-								<Input id="title" name="title" placeholder="Password Confirm" />
+								<Input
+									id="password_confirm"
+									name="password_confirm"
+									placeholder="Password Confirm"
+								/>
 							</div>
 						) : (
 							<div className="flex flex-col space-y-1.5">
 								<Label htmlFor="title">パスワードリセット</Label>
-								<Input id="title" name="title" placeholder="Password Confirm" />
 							</div>
 						)}
 					</div>

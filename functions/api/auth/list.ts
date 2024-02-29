@@ -19,15 +19,14 @@ export const ResponseSchema = zodSelectSchema;
 
 const s = initServer();
 export const router = s.router(contract, {
-	createPost: async ({ body: jsonBody }) => {
-		console.log("=== createPost ===");
-		const repository = new Repository();
-		const validatedBody = zodInsertSchema.parse(jsonBody);
-		const newRecord = await repository.create(validatedBody);
-		// const responseBody = zodSelectSchema.parse(newRecord);
+	listPost: async () => {
+		// return { CreateHandler };
+		const apiRepository = await new Repository();
+		const postList = await apiRepository.all();
+
 		return {
 			status: 201,
-			body: newRecord,
+			body: postList,
 		};
 	},
 });
