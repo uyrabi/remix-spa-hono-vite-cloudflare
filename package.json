@@ -45,7 +45,7 @@
     "tailwindcss": "latest",
     "tailwindcss-animate": "^1.0.7",
     "ts-rest-hono": "^0.5.0",
-    "wrangler": "3.3.0",
+    "wrangler": "^3.30.0",
     "zod-openapi": "^2.13.0"
   },
   "devDependencies": {
