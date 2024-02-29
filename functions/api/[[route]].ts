@@ -3,7 +3,9 @@ import { generateOpenApi } from "@ts-rest/open-api";
 import { Hono } from "hono";
 import { basicAuth } from "hono/basic-auth";
 import { handle } from "hono/cloudflare-pages";
+import { decode, jwt, sign, verify } from "hono/jwt";
 import { logger } from "hono/logger";
+
 import { contract } from "models/contracts/post";
 import ConnectionManager from "models/db/connection";
 
@@ -31,6 +33,17 @@ app.use(
 app.use("/api/*", async (c, next) => {
 	await ConnectionManager.getConnection(c);
 	await next();
+});
+
+app.use(
+	"/api/auth/*",
+	jwt({
+		secret: "it-is-very-secret",
+	}),
+);
+
+app.get("/api/auth/page", (c) => {
+	return c.text("You are authorized");
 });
 
 app.route("/", postApi);
