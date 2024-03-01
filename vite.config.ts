@@ -3,7 +3,10 @@ import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-	plugins: [remix({ appDirectory: "client", ssr: false }), tsconfigPaths()],
+	plugins: [
+		remix({ appDirectory: "./src/client", ssr: false }),
+		tsconfigPaths(),
+	],
 	server:
 		process.env.NODE_ENV === "development"
 			? {

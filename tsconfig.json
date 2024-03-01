@@ -13,12 +13,12 @@
     "allowJs": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
-      "~/*": ["./client/*"],
-      "@client/*": ["./client/*"],
-      "@server/*": ["./functions/*"],
-      "@shadcn/*": ["./client/shadcn/ui/*"],
+      "~/*": ["src/*"],
+      "@client/*": ["client/*"],
+      "@server/*": ["functions/*"],
+      "@shadcn/*": ["client/shadcn/ui/*"]
     },
     // Remix takes care of building everything in `remix build`.
     "noEmit": true
