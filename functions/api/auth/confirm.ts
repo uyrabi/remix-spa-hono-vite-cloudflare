@@ -1,8 +1,8 @@
-import { RequestSchema } from "models/contracts/auth";
+import { RequestSchema } from "functions/api/auth/contract";
 import Repository from "models/user/repository";
 import { zodInsertSchema, zodSelectSchema } from "models/user/types";
 
-import { contract } from "models/contracts/auth";
+import { contract } from "functions/api/auth/contract";
 import { initServer } from "ts-rest-hono";
 
 import { decode, jwt, sign, verify } from "hono/jwt";

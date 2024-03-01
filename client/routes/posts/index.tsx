@@ -20,7 +20,7 @@ import { PostList } from "./postList";
 
 // *** loaderやactionでAPIを叩く際はts-restを用いる
 import { initClient } from "@ts-rest/core";
-import { contract } from "models/contracts/post";
+import { contract } from "functions/api/posts/contract";
 
 const client = initClient(contract, {
 	baseUrl: "",

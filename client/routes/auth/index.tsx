@@ -5,7 +5,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { SignForm } from "./SignForm";
 
 import { initClient } from "@ts-rest/core";
-import { contract } from "models/contracts/auth";
+import { contract } from "functions/api/auth/contract";
 
 const client = initClient(contract, {
 	baseUrl: "",

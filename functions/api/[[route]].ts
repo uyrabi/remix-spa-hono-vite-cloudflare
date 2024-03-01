@@ -6,8 +6,8 @@ import { handle } from "hono/cloudflare-pages";
 import { decode, jwt, sign, verify } from "hono/jwt";
 import { logger } from "hono/logger";
 
-import { contract as authContract } from "models/contracts/auth";
-import { contract } from "models/contracts/post";
+import { contract as authContract } from "functions/api/auth/contract";
+import { contract } from "functions/api/posts/contract";
 import ConnectionManager from "models/db/connection";
 
 import { api as authApi } from "./auth";

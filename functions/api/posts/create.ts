@@ -1,7 +1,7 @@
 import Repository from "models/post/repository";
 import { zodInsertSchema, zodSelectSchema } from "models/post/types";
 
-import { contract } from "models/contracts/post";
+import { contract } from "functions/api/posts/contract";
 import { initServer } from "ts-rest-hono";
 
 // *** リクエスト・レスポンスの型はここに記述

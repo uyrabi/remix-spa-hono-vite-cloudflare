@@ -4,7 +4,7 @@ import { Hono } from "hono";
 
 export const api = new Hono();
 
-import { contract } from "models/contracts/post";
+import { contract } from "functions/api/posts/contract";
 import { createHonoEndpoints } from "ts-rest-hono";
 import { router as createRouter } from "./create";
 import { router as listRouter } from "./list";
