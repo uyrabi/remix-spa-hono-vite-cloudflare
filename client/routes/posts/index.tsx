@@ -18,14 +18,14 @@ import {
 import { PostForm } from "./form";
 import { PostList } from "./postList";
 
-// *** loaderやactionでAPIを叩く際はts-restを用いる
-import { initClient } from "@ts-rest/core";
-import { contract } from "functions/api/posts/contract";
+//
 
-const client = initClient(contract, {
-	baseUrl: "",
-	baseHeaders: {},
-});
+import { routes } from "@server/api/posts";
+import { hc } from "hono/client";
+import type { InferRequestType, InferResponseType } from 'hono/client'
+
+type PostType = typeof routes;
+const rpc = hc<PostType>("/api");
 
 // *** charSetやviewportなどmetaタグの内容を設定する
 export const meta: MetaFunction = () => {
@@ -69,12 +69,11 @@ export async function clientAction({ request }: ClientActionFunctionArgs) {
 	console.log("--- clientAction ---");
 	try {
 		const formData = await request.formData();
-		const formDataToJson = Object.fromEntries(formData.entries());
-		const requestSchema = contract.createPost.body;
-		// フォームの入力値をRequestのzodスキーマにキャストする（zodスキーマに沿っていないとエラーになる）
-		const jsonBody = requestSchema.parse(formDataToJson);
+		type requestnType = InferRequestType<typeof rpc.post.$post>;
+		type responseType = InferResponseType<typeof rpc.post.$post>;
+        // formDataからPostJsonTypeに該当するデータを取得
 
-		const response = await client.createPost({ body: jsonBody });
+		const response = await rpc.post.$post(jsonBody);
 
 		if (response.status != 201) {
 			throw new Error(`response.status: ${response.status}`);

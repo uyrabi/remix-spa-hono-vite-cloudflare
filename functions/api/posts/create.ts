@@ -1,33 +1,57 @@
 import Repository from "models/post/repository";
-import { zodInsertSchema, zodSelectSchema } from "models/post/types";
 
-import { contract } from "functions/api/posts/contract";
-import { initServer } from "ts-rest-hono";
+import { createRoute, OpenAPIHono } from '@hono/zod-openapi'
 
-// *** リクエスト・レスポンスの型はここに記述
-// *** omit: 一部のプロパティを省略した新しい型を生成
-// *** pick: 一部のプロパティを抽出した新しい型を生成
+import {
+	SelectType,
+	zodInsertSchema,
+	zodSelectSchema,
+} from "models/post/types";
 
-export const requestSchema = zodInsertSchema.pick({
+export const RequestSchema = zodInsertSchema.pick({
 	title: true,
 	content: true,
 });
 
-export const ResponseSchema = zodSelectSchema;
+export type ResponseSchema = SelectType;
 
-// *** MEMO: リクエストがRequestSchemaに沿っていない場合、実行されるよりも前にエラーになる
+export const createRouting = createRoute({
+	  method: 'post',
+	  path: '/post',
+	  responses: {
+	    200: {
+	      content: {
+	        'application/json': {
+	          schema: zodSelectSchema,
+	        },
+	      },
+	      description: 'Retrieve the user',
+	    },
+	  },
+	  request: {
+		body: {
+			content:{
+				"application/json": {
+					schema: RequestSchema,
+					example: RequestSchema
+				},
+			}
+		}
 
-const s = initServer();
-export const router = s.router(contract, {
-	createPost: async ({ body: jsonBody }) => {
-		console.log("=== createPost ===");
-		const repository = new Repository();
-		const validatedBody = zodInsertSchema.parse(jsonBody);
-		const newRecord = await repository.create(validatedBody);
-		// const responseBody = zodSelectSchema.parse(newRecord);
-		return {
-			status: 201,
-			body: newRecord,
-		};
-	},
-});
+	  },
+	})
+	
+export const createHandler = async (c) => {
+	const repository = new Repository();
+	const jsonBody = {
+		title: 'hogeTitle',
+		content: 'fugaContent'
+	};
+	const validatedBody = zodInsertSchema.parse(jsonBody);
+	const newRecord = await repository.create(validatedBody);
+	// const responseBody = zodSelectSchema.parse(newRecord);
+	return c.json({
+		status: 200,
+		body: newRecord,
+	});
+};

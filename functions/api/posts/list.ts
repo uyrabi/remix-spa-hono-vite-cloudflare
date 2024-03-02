@@ -1,32 +1,42 @@
 import Repository from "models/post/repository";
-import { zodInsertSchema, zodSelectSchema } from "models/post/types";
 
-import { contract } from "functions/api/posts/contract";
-import { initServer } from "ts-rest-hono";
+import { createRoute, OpenAPIHono } from '@hono/zod-openapi'
 
-// *** リクエスト・レスポンスの型はここに記述
-// *** omit: 一部のプロパティを省略した新しい型を生成
-// *** pick: 一部のプロパティを抽出した新しい型を生成
+import {
+	SelectType,
+	zodInsertSchema,
+	zodSelectSchema,
+} from "models/post/types";
 
-export const requestSchema = zodInsertSchema.pick({
+export const RequestSchema = zodInsertSchema.pick({
 	title: true,
 	content: true,
 });
 
-export const ResponseSchema = zodSelectSchema;
+export type ResponseSchema = SelectType;
 
-// *** MEMO: リクエストがRequestSchemaに沿っていない場合、実行されるよりも前にエラーになる
 
-const s = initServer();
-export const router = s.router(contract, {
-	listPost: async () => {
-		// return { CreateHandler };
-		const apiRepository = await new Repository();
-		const postList = await apiRepository.all();
+export const listRouting = createRoute({
+	  method: 'get',
+	  path: '/post',
+	  responses: {
+	    200: {
+	      content: {
+	        'application/json': {
+	          schema: zodSelectSchema,
+	        },
+	      },
+	      description: 'Retrieve the user',
+	    },
+	  },
+	})
+	
+export const listHandler = async (c) => {
+	const apiRepository = await new Repository();
+	const postList = await apiRepository.all();
 
-		return {
-			status: 201,
-			body: postList,
-		};
-	},
-});
+	return c.json({
+		status: 201,
+		body: postList,
+	});
+};
