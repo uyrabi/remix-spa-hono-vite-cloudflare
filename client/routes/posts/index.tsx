@@ -22,7 +22,7 @@ import { PostList } from "./postList";
 
 import { routes } from "@server/api/posts";
 import { hc } from "hono/client";
-import type { InferRequestType, InferResponseType } from 'hono/client'
+import type { InferRequestType, InferResponseType } from "hono/client";
 
 type PostType = typeof routes;
 const rpc = hc<PostType>("/api");
@@ -36,7 +36,7 @@ export async function clientLoader({ request }: ClientLoaderFunctionArgs) {
 	console.log("=== clientLoader at routes/_index ===");
 	console.log("request", request);
 	try {
-		const response = await client.listPost();
+		const response = await rpc.listPost();
 		console.table(response);
 
 		if (response.status != 201) {
@@ -69,9 +69,9 @@ export async function clientAction({ request }: ClientActionFunctionArgs) {
 	console.log("--- clientAction ---");
 	try {
 		const formData = await request.formData();
-		type requestnType = InferRequestType<typeof rpc.post.$post>;
-		type responseType = InferResponseType<typeof rpc.post.$post>;
-        // formDataからPostJsonTypeに該当するデータを取得
+		type RequestnType = InferRequestType<typeof rpc.post.$post>;
+		type ResponseType = InferResponseType<typeof rpc.post.$post>;
+		// formDataからPostJsonTypeに該当するデータを取得
 
 		const response = await rpc.post.$post(jsonBody);
 
