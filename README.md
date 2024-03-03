@@ -163,7 +163,9 @@ https://techfeed.io/entries/65cc0f0f7036d02cdfb92e6b
 
 ## SecureHeaders
 
-## ReDoc
+## ReDoc/Docusaurus
+
+https://zenn.dev/gangannikki/books/schema-doc-driven-development/viewer/build-docusaurus-openapi-env
 
 # MEMO
 
